@@ -415,7 +415,7 @@ class PartBase (object):
             pitch = self.pin_pitch
 
         objs = [obj]
-        for i in range(2, pins + 1):
+        for i in range(2, int(pins) + 1):
             objs.append(obj.translate((-pitch * (i - 1), 0, 0)))
 
         return self._union_all(objs)

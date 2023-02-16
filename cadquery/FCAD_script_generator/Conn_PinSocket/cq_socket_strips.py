@@ -38,7 +38,8 @@ from Helpers import show
 
 ## base parametes & model
 import cq_base_model
-reload(cq_base_model)
+import importlib
+importlib.reload(cq_base_model)
 from cq_base_model import PartBase
 from cq_base_parameters import PinStyle, CaseType
 from parameters import *
@@ -90,7 +91,7 @@ class socket_strip (PartBase):
 
     def makeModelName(self, genericName):
 
-        return "PinSocket_{0}x{1:02}_P{2:03.2f}mm_{3}{4}".format(self.num_pin_rows, self.num_pins / self.num_pin_rows, self.pin_pitch,
+        return "PinSocket_{0}x{1:02d}_P{2:03.2f}mm_{3}{4}".format(self.num_pin_rows, int(self.num_pins / self.num_pin_rows), self.pin_pitch,
                  "Vertical" if self.pin_style == PinStyle.STRAIGHT else "Horizontal",
                  '' if self.type == CaseType.THT else '_SMD')
 

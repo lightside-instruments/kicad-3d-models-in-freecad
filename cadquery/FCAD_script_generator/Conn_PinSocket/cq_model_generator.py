@@ -63,6 +63,7 @@ import re, fnmatch
 import FreeCAD #, Draft, FreeCADGui
 #import ImportGui
 import FreeCADGui
+import importlib
 Gui = FreeCADGui
 #from Gui.Command import *
 
@@ -74,7 +75,7 @@ if FreeCAD.GuiUp:
 # Import cad_tools
 import cq_cad_tools
 # Reload tools
-reload(cq_cad_tools)
+importlib.reload(cq_cad_tools)
 # Explicitly load all needed functions
 from cq_cad_tools import FuseObjs_wColors, GetListOfObjects, restore_Main_Tools, \
  exportSTEP, close_CQ_Example, saveFCdoc, z_RotateObject, Color_Objects, \
@@ -117,7 +118,7 @@ except NameError:
 try:
     close_CQ_Example(FreeCAD, Gui)
 except: # catch *all* exceptions
-    print "CQ 030 doesn't open example file"
+    print("CQ 030 doesn't open example file")
 
 global All
 All = None
@@ -350,7 +351,7 @@ class ModelGenerator:
 
             if not self.kicadStepUptools == False:
                 kicadStepUptools.KSUWidget.close()
-                reload(kicadStepUptools)
+                importlib.reload(kicadStepUptools)
                 kicadStepUptools.KSUWidget.close()
                 #kicadStepUptools.KSUWidget.setWindowState(QtCore.Qt.WindowMinimized)
                 #kicadStepUptools.KSUWidget.destroy()
@@ -432,7 +433,7 @@ class ModelGenerator:
 
         models_made = 0
 
-        if len(options) > 0 and not params.base_params.has_key(options[0]):
+        if len(options) > 0 and options[0] not in params.base_params:
 
             models = params.getAllModels(series)
 
@@ -444,7 +445,7 @@ class ModelGenerator:
                 buildAllSMD = options[0] == "allsmd"
                 qfilter = '*' if options[0] == "all" or options[0] == "allsmd" else options[0]
                 qfilter = re.compile(fnmatch.translate(qfilter))
-                for variant in models.keys():
+                for variant in list(models.keys()):
                     if qfilter.match(variant):
                         params = models[variant].params
                         model = models[variant].model(params)
@@ -457,7 +458,7 @@ class ModelGenerator:
 
                 models = params.getSampleModels(series)
 
-                for variant in models.keys():
+                for variant in list(models.keys()):
                     params = models[variant].params
                     model = models[variant].model(params)
                     if model.make_me:

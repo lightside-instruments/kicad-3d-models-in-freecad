@@ -125,7 +125,7 @@ class params (PartParametersBase):
             return
 
     def _import_params(self, device):
-        if self.base_params.has_key(device['series']):
+        if device['series'] in self.base_params:
             base = self.base_params[device['series']]
             return self.DParams(
                 num_pins = None,                  # to be added programmatically
@@ -169,7 +169,7 @@ class params (PartParametersBase):
 
         # instantiate generator classes in order to make a dictionary of all variants
         for i in range(0, len(model_classes)):
-            for variant in self.devices.keys():
+            for variant in list(self.devices.keys()):
                 for pin_columns in range(self.devices[variant].pins_min, self.devices[variant].pins_max + 1):
                     params = self.devices[variant]._replace(num_pins = pin_columns * self.devices[variant].num_pin_rows)
                     model = model_classes[i](params)
@@ -184,7 +184,7 @@ class params (PartParametersBase):
 
         # instantiate generator classes in order to make a dictionary of all default variants
         for i in range(0, len(model_classes)):
-            for variant in self.devices.keys():
+            for variant in list(self.devices.keys()):
                 params = self.devices[variant]._replace(num_pins = 5 * self.devices[variant].num_pin_rows)
                 model = model_classes[i](params)
                 if model.make_me:
@@ -194,7 +194,7 @@ class params (PartParametersBase):
 
     def getModel(self, model_class, variant):
 
-        model = self.devices.has_key(variant)
+        model = variant in self.devices
 
         # instantiate generator class in order to make a dictionary entry for a single variant
         if model:

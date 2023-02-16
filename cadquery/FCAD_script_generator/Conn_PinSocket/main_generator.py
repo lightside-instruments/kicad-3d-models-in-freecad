@@ -44,6 +44,7 @@ __Comment__ = 'make make pin socket strip 3D models exported to STEP and VRML'
 ___ver___ = "1.0.0 23/11/2017"
 
 import sys, os
+import importlib
 
 script_dir  = os.path.dirname(os.path.realpath(__file__))
 scripts_root = script_dir.split(script_dir.split(os.sep)[-1])[0]
@@ -54,10 +55,10 @@ sys.path.append(scripts_root + os.sep + "_tools")
 from cq_model_generator import All, ModelGenerator
 
 import parameters
-reload(parameters)
+importlib.reload(parameters)
 
 import cq_socket_strips
-reload(cq_socket_strips)
+importlib.reload(cq_socket_strips)
 
 family = All # set to All to generate all series
 
@@ -72,7 +73,7 @@ options = sys.argv[2:] if len(sys.argv) >= 3 else []
 
 gen = ModelGenerator(scripts_root, script_dir, saveToKicad=False)
 #gen.kicadStepUptools = False
-gen.footprints_dir = "\\\MEDIA\MyStuff\Electronics\KiCad\New\genmod"
+gen.footprints_dir = "/tmp/modgen"
 gen.setLicense(ModelGenerator.alt_license)
 gen.makeModels(options, series, family, parameters.params())
 
