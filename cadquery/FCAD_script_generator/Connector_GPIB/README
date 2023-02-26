@@ -1,0 +1,8 @@
+Working but incomplete generator for a GPIB connector model for 112-024-113R001
+
+Invoke from FreeCAD 0.19 CadQuery->Invoke Script in the following sequence:
+1. shape.py - creates the blue plastic component
+2. import.py - imports the proprietary model for the 112-024-113R001
+3. color.py - setsblue color to the created plastic component
+
+No automated export script at this moment. 
