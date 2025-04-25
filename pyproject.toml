@@ -1,0 +1,92 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kicad-footprint-generator"
+version = "1.1.2"
+description = "Creating kicad footprints using Python scripts"
+readme = "README.md"
+
+# Who created the project
+authors = [
+    {name = "Thomas Pointhuber", email = "thomas.pointhuber@gmx.at"},
+    {name = "KiCad Library Team" },
+]
+
+# Project dependencies
+dependencies = [
+    "asteval",
+    "typing_extensions",
+    "pyyaml",
+    "future",
+    "tabulate",
+    "pyclipper"
+]
+
+# Optional: development dependencies
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pycodestyle",
+    "black",
+    "isort",
+    "flake8",
+    "unittest2",
+    "nose2",
+    "nose2-cov"
+]
+
+docs = [
+    "sphinx",
+    "sphinx_rtd_theme",
+]
+
+3d = [
+    "cadquery==2.3.1",
+    # This should have been '7.7.0,<7.8', but pip picks up a broken version 7.7.2.2b2 instead
+    # "cadquery-ocp>=7.7.0,<7.8",
+    "cadquery-ocp==7.7.2",
+    "nptyping==2.0.1",
+    "nlopt==2.7.1",
+    "numpy==1.26.4",
+]
+
+# Package discovery configuration
+[tool.setuptools.packages.find]
+where = ["src", "."]
+include = [
+    "kilibs*",
+    "KicadModTree*",
+    "scripts.general*",
+    "scripts.tools*",
+    "scripts.tests*",
+    "scripts.Packages.utils",
+]
+
+[tool.setuptools.package-data]
+"scripts.tools" = [
+    "global_config_files/*.yaml",
+]
+"kilibs.ipc_tools" = [
+    "data/*.yaml",
+]
+
+[tool.isort]
+profile = "black"
+# COMMON is a made-up name listing a bunch of regularly used imports
+sections = ['FUTURE', 'STDLIB', 'COMMON', 'THIRDPARTY', 'FIRSTPARTY', 'LOCALFOLDER']
+known_common = ['cadquery', 'yaml', 'OCP']
+
+# Configure MyPy static type checker
+[tool.mypy]
+explicit_package_bases = true
+namespace_packages = true
+packages = [
+    "kilibs",
+    "KicadModTree",
+]
+mypy_path = [
+    "src",
+    ".",
+]
