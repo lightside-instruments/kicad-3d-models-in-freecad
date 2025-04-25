@@ -7214,7 +7214,7 @@ MSOP-10_3x3mm_Pitch0.5mm:
   destination_dir: 'Package_SO.3dshapes'
   source: 'http://cds.linear.com/docs/en/packaging/05081661_F_MS.pdf'
 
-MSOP-10-1EP_3x3mm_Pitch0.5mm:
+MSOP-10-1EP_3x3mm_P0.5mm:
   the: 12.0
   tb_s: 0.15
   c: 0.18
